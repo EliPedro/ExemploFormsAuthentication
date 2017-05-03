@@ -1,0 +1,77 @@
+﻿@using Authentication.Mvc.Store;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("FormsAuthentication.Mvc", "Index", "Autenticador", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                
+                    <li>@Html.ActionLink("Novo usuário", "Cadastrar", "Autenticador")</li>
+                    <li>@Html.ActionLink("Novo produto", "Cadastra", "Produtos")</li>
+                    <li>@Html.ActionLink("Produtos", "Index", "Produtos")</li>
+                    <li>
+                        @{
+                            Carrinho carrinho = Session["Carrinho"] as Carrinho;
+
+                            if (carrinho != null)
+                            {
+                                @Html.ActionLink("Meu carrinho [" + carrinho.Produtos.Count + "]", "Index", "Carrinho")
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Meu carrinho [0]", "Index", "Carrinho")                            }
+                                }
+                    </li>
+       
+                </ul>
+                @if (User.Identity.IsAuthenticated)
+                 {
+                    //Request.IsAuthenticatedr
+                    <ul class="nav navbar-nav navbar-right">
+
+                        <li>@Html.ActionLink("Olá " + User.Identity.Name, "")</li>
+                        <li>@Html.ActionLink("Log out", "Sair", "Autenticador")</li>
+                    </ul>
+                }
+                else
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>@Html.ActionLink("Cadastre-se", "Cadastrar", "Autenticador")</li>
+                        <li>@Html.ActionLink("Login in", "Entrar", "Autenticador")</li>
+                    </ul>
+                }
+               
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year</p>
+        </footer>
+    </div>
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+</html>

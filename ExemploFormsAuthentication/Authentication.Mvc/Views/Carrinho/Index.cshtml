@@ -1,0 +1,51 @@
+﻿@model Authentication.Mvc.Store.Carrinho
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@if (Model.Produtos.Count > 0)
+{
+    @Html.ActionLink("Cancelar carrinho", "CancelarCarrinho", "Carrinho")
+
+    <table class="tabel table-hover">
+        <tr>
+            <th>
+                Produto
+            </th>
+            <th>
+                Preço
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Produtos)
+        {
+            <tr>
+
+                <td>
+                    @item.Nome
+                </td>
+                <td>
+                    @item.Preco
+                </td>
+
+                <td>
+                    @Html.ActionLink("Remover do carrinho", "Remover", "Carrinho", new { idx = item.ProdutoId })
+                </td>
+
+            </tr>
+        }
+        </table>
+        }else
+        {
+
+            <p class="text-info">Putz! Seu carrinho está vazio</p>
+            <p>Bora @Html.ActionLink("Comprar", "Index", "Produtos") !</p>
+     }
+
+
+
+
+
+
